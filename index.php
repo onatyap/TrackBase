@@ -16,7 +16,7 @@
 
     <button type="submit", name='sign_in'>Login</button>
    </form>
-
+  </div>
     <h2>Sign Up</h2>
 
   <form action="login_actions.php" method="post">

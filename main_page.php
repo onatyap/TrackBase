@@ -22,6 +22,10 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
     <h3>Search content by name</h3>
     <label><b>Name</b></label>
     <input type="text" placeholder="Enter name" name="content_name" required>
+    <input type="radio" id="movie" name="category" value="movie" checked="checked">
+    <label for="movie">Movies</label>
+    <input type="radio" id="tv_show" name="category" value="tv_show">
+    <label for="tv_show">TV Shows</label><br>
     <button type="submit", name='search'>Search</button>
    </form>
 
