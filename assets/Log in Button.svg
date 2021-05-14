@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 316 85" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-1234.68,-825.419)">
+        <g id="Log-in-Button-Background" serif:id="Log in Button Background" transform="matrix(0.470178,0,0,0.0996057,813.87,809.482)">
+            <path d="M1565.64,372.291C1565.64,255.124 1545.49,160 1520.67,160L939.976,160C915.155,160 895.003,255.124 895.003,372.291L895.003,796.872C895.003,914.039 915.155,1009.16 939.976,1009.16L1520.67,1009.16C1545.49,1009.16 1565.64,914.039 1565.64,796.872L1565.64,372.291Z" style="fill:rgb(162,211,194);"/>
+        </g>
+        <g transform="matrix(1,0,0,1,1392.51,402.411)">
+            <text x="-45.226px" y="473.434px" style="font-family:'Dubai-Medium', 'Dubai', sans-serif;font-weight:500;font-size:36px;fill:rgb(35,12,15);">Lo<tspan x="-8.254px 10.142px " y="473.434px 473.434px ">g </tspan>in</text>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 125 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-4550.2,-947.5)">
+        <g transform="matrix(1,0,0,1,4200,0)">
+            <g id="Add-to-List" serif:id="Add to List" transform="matrix(1,0,0,1,0.2,67.5)">
+                <g id="Add-to-List-Button" serif:id="Add to List Button" transform="matrix(0.18639,0,0,0.0647697,183.181,869.637)">
+                    <path d="M1565.64,372.291C1565.64,255.124 1532.59,160 1491.87,160L968.773,160C928.059,160 895.003,255.124 895.003,372.291L895.003,796.872C895.003,914.039 928.059,1009.16 968.773,1009.16L1491.87,1009.16C1532.59,1009.16 1565.64,914.039 1565.64,796.872L1565.64,372.291Z" style="fill:rgb(178,232,250);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-4130.6,-81.2209)">
+                    <text x="4515.29px" y="985.581px" style="font-family:'Dubai-Medium', 'Dubai', sans-serif;font-weight:500;font-size:20px;fill:rgb(35,12,15);">A<tspan x="4528.05px 4538.55px " y="985.581px 985.581px ">dd</tspan> t<tspan x="4560.83px " y="985.581px ">o</tspan></text>
+                    <text x="4527.9px" y="1005.58px" style="font-family:'Dubai-Medium', 'Dubai', sans-serif;font-weight:500;font-size:20px;fill:rgb(35,12,15);">Lis<tspan x="4551.34px " y="1005.58px ">t</tspan></text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
