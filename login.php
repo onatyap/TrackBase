@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="login-button">
-                    <button type="submit", name='log-in'>Log in</button>
+                    <button type="submit", name='sign_in'>Log in</button>
                 </div>
                 </form>
 
