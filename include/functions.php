@@ -107,7 +107,7 @@ function getAverageRating($conn,$contentId) {
 function getPopularMovies($conn) {
 	$today = strtotime("+1 day");
 	$todayDate = date("Y-m-d",$today);
-	$lastMonth = strtotime("-1 month");
+	$lastMonth = strtotime("-1 year");
 	$lastMonthDate = date("Y-m-d", $lastMonth);
     $query = "SELECT content.content_id as content_id, content.description AS description, content.content_name AS name, COUNT(*) as cnt FROM content, watched_movies WHERE content.content_id = watched_movies.content_id AND watched_movies.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $todayDate . "' GROUP BY content.content_id ORDER BY COUNT(*) DESC LIMIT 10";
     $result = mysqli_query($conn, $query);
@@ -117,7 +117,7 @@ function getPopularMovies($conn) {
 function getPopularTvSeries($conn) {
 	$today = strtotime("+1 day");
 	$todayDate = date("Y-m-d",$today);
-	$lastMonth = strtotime("-1 month");
+	$lastMonth = strtotime("-1 year");
 	$lastMonthDate = date("Y-m-d", $lastMonth);
 	$query = "SELECT content.content_id as content_id, content.description AS description, content.content_name AS name, COUNT(*) as cnt FROM content, watched_episodes WHERE content.content_id = watched_episodes.tv_show_id AND watched_episodes.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $todayDate . "' GROUP BY content.content_id ORDER BY COUNT(*) DESC LIMIT 10";
 	$result = mysqli_query($conn, $query);
@@ -126,7 +126,7 @@ function getPopularTvSeries($conn) {
 
 function getPopularMoviesByGenre($conn, $genre) {
 	$today = date("Y-m-d");
-	$lastMonth = strtotime("-1 month");
+	$lastMonth = strtotime("-1 year");
 	$lastMonthDate = date("Y-m-d", $lastMonth);
     $query = "SELECT content.content_id as content_id, content.description AS description, content.content_name AS name, COUNT(*) as cnt FROM content, watched_movies, categories WHERE content.content_id = watched_movies.content_id AND content.content_id = categories.content_id AND categories.genre = '" . $genre . "' AND watched_movies.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $today . "' GROUP BY content.content_id ORDER BY COUNT(*) DESC LIMIT 10";
     $result = mysqli_query($conn, $query);

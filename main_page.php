@@ -12,7 +12,7 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true){
 }
 
 // Get most popular movies
-echo "<h3>Most Popular Movies</h3>";
+echo "<div class ='mpm'> Most Popular Movies </div>";
 $mostPopularMovies = getPopularMovies($conn);
 printPopularTable($conn,$mostPopularMovies);
 
@@ -28,7 +28,7 @@ printPopularTable($conn,$mostPopularActionMovies);
 
 <html>
 <head>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="main_page.css">
 </head>
 <body>
 
