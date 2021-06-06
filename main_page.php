@@ -1,3 +1,17 @@
+<?php
+require_once 'include/dbConnect.php';
+require_once 'include/functions.php';
+
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+  header("location:index.php");
+  exit();
+}
+?>
+
 <html>
 
 <head>
@@ -6,112 +20,77 @@
 
 <body>
 
-  <form action="main_page_actions.php" method="post">
+  <div class='navbar'>
+    <ul class='navbar-list'>
+      <li class='watchlist'>
+        <form action='main_page_actions.php' method='post'>
+          <button type='submit' , name='show_watchlist'>Watchlist</button>
+        </form>
+      </li>
+      <li class='watched'>
+        <form action='main_page_actions.php' method='post'>
+          <button type='submit' , name='show_watched_movies'>Watchedlist</button>
+        </form>
+      </li>
+      <li class='logout-button'>
+        <button onclick='window.location.href ="index.php";'>Log out</button>
+      </li>
+    </ul>
+  </div>
+</body>
 
-    <div class="container">
+</html>
 
-      <div class="page-title">
-        Welcome back!
-      </div>
-    
-
-      <div class="grid-container">
-
-        <div class="left-side">
-
-          <!-- Continue Watching Title -->
-          <div class="continue-watching">
-            Continue watching
-            <span class="line2"></span>
-          </div>
-
-          <div class="content-container">
-
-            <!-- TV Show 1 -->
-            <div class="content-1">
-              <img src="assets/peaky_blinders.jpg" , name="content-1-image">
-              <div class="content-title" , name="content-1-title">
-                Peaky Blinders
-              </div>
-              <div class="episode-tracker" , name="content-1-tracker">
-                S4 | E3
-              </div>
-              <div class="buttons">
-                <button type="submit" , name="add_to_watchlist">Mark as Watched</button>
-              </div>
-
-
-            </div>
-
-            <!-- TV Show 2 -->
-            <div class="content-2">
-              <img src="assets/breakingbad.jpg" , name="content-2-image">
-              <div class="content-title" , name="content-2-title">
-                Breaking Bad
-              </div>
-              <div class="episode-tracker" , name="content-2-tracker">
-                S3 | E12
-              </div>
-              <div class="buttons">
-                <button type="submit" , name="add_to_watchlist">Mark as Watched</button>
-              </div>
-            </div>
-
-            <!-- TV Show 3 -->
-            <div class="content-3">
-              <img src="assets/got.jpg" , name="content-3-image">
-              <div class="content-title" , name="content-3-title">
-                Game of Thrones
-              </div>
-              <div class="episode-tracker" , name="content-3-tracker">
-                S5 | E8
-              </div>
-              <div class="buttons">
-                <button type="submit" , name="add_to_watchlist">Mark as Watched</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
+<?php
+echo "<div class='grid-container'>";
+echo "<div class='left-side'>";
+echo "<div class='left-title'>";
+echo "Most Popular Movies";
+echo "</div>";
+// Get most popular movies
+$mostPopularMovies = getPopularMovies($conn);
+printPopularTable($conn, $mostPopularMovies);
+echo "</div>";
+echo "<div class='right-side'>";
+echo "<div class='right-title'>";
+echo "Most Popular TV Series";
+echo "</div>";
+// Get most popular tv series
+$mostPopularTvSeries = getPopularTvSeries($conn);
+printPopularTable($conn, $mostPopularTvSeries);
+echo "</div>";
+echo "</div";
+/*
+echo "<h3>Most Popular Action Movies</h3>";
+$mostPopularActionMovies = getPopularMoviesByGenre($conn, 'Action');
+printPopularTable($conn, $mostPopularActionMovies);
+*/
+?>
 
 
-        <!-- Right Side -->
-        <div class="right-side">
+<html>
 
-          <div class="search-title">
-            Search
-            <span class="line"></span>
-          </div>
+<head>
+  <link rel="stylesheet" href="main_page.css">
+</head>
 
-          <!-- Search Selection Box:
-        Allows user to pick content type and search accordingly -->
-          <div class="selection-box">
+<body>
 
-            <select name='content_type'>
-              <option value="0"> Movie </option>
-              <option value="1"> TV Show </option>
-              <option value="3"> Genre </option>
-            </select>
+  <div class="search-bar">
 
-            <!-- Search Text Box -->
-            <input class='search-bar' , type="text" placeholder="Enter name" name="content_name" required>
+    <div class="search-text">Search content by name</div>
 
-          </div>
+    <form action="main_page_actions.php" method="post">
+      <label class="search-name">Name</label>
+      <input type="text" placeholder="Enter name" name="content_name" required>
+      <input type="radio" id="movie" name="category" value="movie" checked="checked">
+      <label class="movie-select", for="movie">Movies</label>
+      <input type="radio" id="tv_show" name="category" value="tv_show">
+      <label class="tv-select", for="tv_show">TV Shows</label><br>
+      <button class="search-button", type="submit" , name='search'>Search</button>
+    </form>
 
-
-
-          <!-- Search Submit Button -->
-          <div class="search-button">
-            <button type="submit" , name='search'>Search</button>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </form>
+  </div>
 
 </body>
 

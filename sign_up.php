@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="link-to">
-                        Already a user? Log in <a href="login.php">here</a>.
+                        Already a user? Log in <a href="index.php">here</a>.
                     </div>
 
                     <div class="signup-button">

@@ -1,44 +1,37 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="functions.css">
+    </head>
+</html>
+
+
 <?php
 require_once 'include/dbConnect.php';
+require_once 'include/functions.php';
 
 session_start();
 
 if (isset($_POST['search'])){
     $contentName = $_POST["content_name"];
+    $category = $_POST["category"];
 
-    $result = searchContentWithName($conn,$contentName);
+    if($category == "movie"){
+        $result = searchMovieWithName($conn,$contentName);
+    } else {
+        $result = searchTvShowWithName($conn,$contentName);
+    }
 
-        ?><br>
+    printTable($conn,$result);
+}
 
-        <table border='1'>
+if (isset($_POST['show_watchlist'])){
+    $result = getWatchlist($conn);
+    printTable($conn,$result);
+}
 
-        <tr>
-
-        <th>Name</th>
-
-        <th>Description</th>
-
-        <th>Add to watchlist</th>
-
-        </tr>
-
-        <?php
-
-        foreach($result as $row){
-
-            echo "<tr>";
-
-            echo "<td>" . $row['content_name'] . "</td>";
-
-            echo "<td>" . $row['description'] . "</td>";
-
-            echo "<td> <iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe> <form action='main_page_actions.php' method='post' target='dummyframe'> <input type='hidden' name='content_id' value=" . $row['content_id'] . "> <input type='submit' name='add_to_watchlist'/> </form> </td>";
-
-            echo "</tr>";
-
-        }
-
-        echo "</table>";
+if (isset($_POST['show_watched_movies'])){
+    $result = getWatchedMovies($conn);
+    printTable($conn,$result);
 }
 
 if (isset($_POST['add_to_watchlist'])){
@@ -46,15 +39,45 @@ if (isset($_POST['add_to_watchlist'])){
     addToWatchlist($conn,$contentId);
 }
 
-
-function searchContentWithName($conn,$contentName){
-    $query = "SELECT * FROM content WHERE content.content_name LIKE '%" . $contentName . "%'";
-    return mysqli_query($conn, $query);
+if (isset($_POST['remove_from_watchlist'])){
+    $contentId = $_POST["content_id"];
+    removeFromWatchlist($conn,$contentId);
 }
 
-function addToWatchlist($conn,$contentId) {
-    $query = " INSERT INTO LISTS(user_id,content_id) VALUES ('" . $_SESSION["id"] . "', '" . $contentId . "')";
-    echo $query;
-    mysqli_query($conn, $query);
+if (isset($_POST['add_to_watched'])){
+    $contentId = $_POST["content_id"];
+    addToWatched($conn,$contentId);
 }
+
+if (isset($_POST['remove_from_watched'])){
+    $contentId = $_POST["content_id"];
+    removeFromWatched($conn,$contentId);
+}
+
+if (isset($_POST['select_episodes'])){
+    $contentId = $_POST["content_id"];
+    $result = getEpisodesTable($conn,$contentId);
+    createEpisodesTable($conn,$result);
+}
+
+if (isset($_POST['add_episode_to_watched'])){
+    $contentId = $_POST["content_id"];
+    $season = $_POST["season"];
+    $episode_number = $_POST["episode_number"];
+    addEpisodeToWatched($conn,$contentId,$season,$episode_number);
+}
+
+if (isset($_POST['remove_episode_from_watched'])){
+    $contentId = $_POST["content_id"];
+    $season = $_POST["season"];
+    $episode_number = $_POST["episode_number"];
+    removeEpisodeFromWatched($conn,$contentId,$season,$episode_number);
+}
+
+
+
+echo "<div class='back-button'> <button onclick=goBack()>Back</button> </div>";
+ ?>
+
+
 

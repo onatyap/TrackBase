@@ -1,127 +1,131 @@
 body {
     margin: 0;
+    font-family: Dubai;
 }
 
-.page-title {
+button {
+    font-size: 20px;
     font-family: Dubai;
-    font-size: 60px;
-    font-weight: 700;
-    text-align: center;
-    margin-top: 100px;
-    margin-bottom: 20px;
+    padding: 0;
+    background: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #285445;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+li {
+    display: inline;
+    float: left;
+    font-size: 20px;
+}
+
+.navbar form {
+    font-size: 0%;
+}
+
+.watchlist, .watched {
+    display: block;
+    padding: 8px;
+}
+
+.watchlist button, .watched button {
+    color: white;
+    border: none;
+}
+
+.watchlist button:hover, .watched button:hover {
+    text-decoration: underline;
+}
+
+.logout-button {
+    display: block;
+    padding: 8px;
+    float: right;
+}
+
+.logout-button button {
+    color: white;
+    border: none;
+}
+
+.logout-button button:hover {
+    text-decoration: underline;
 }
 
 .grid-container {
-    font-family: Dubai;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin-top: 4%;
 }
 
-.left-side {
-    margin-left: 220px;
+.left-side, .right-side {
+    margin-left: 15%;
 }
 
-.continue-watching {
-    font-size: 46px;
+.left-title, .right-title {
+    color: #230c0f;
+    font-size: 40px;
     font-weight: 700;
-}
-
-.line2 {
-    margin-top: 30px;
-    margin-left: 20px;
-    width: 26%;
-    border-bottom: 20px solid #580e29;
-    position: absolute;
-}
-
-.content-container {
-    grid-column-gap: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.content-title {
-    font-size: 26px;
-    font-weight: 400;
-    text-align: center;
-}
-
-.episode-tracker {
-    font-size: 22px;
-    font-weight: 350;
-    text-align: center;
-}
-
-.buttons {
-    margin-top: 10px;
-    text-align: center;
-}
-
-.buttons button {
-    font-size: 20px;
-    font-weight: 500;
-    font-family: Dubai;
-    border-radius: 10px;
-    padding: 0;
-    border: none;
-    background: none;
-    background-color: #a2d3c2;
-    height: 70px;
-    width: 140px;
-}
-
-.right-side {
-    margin-left: 180px;
-}
-
-.search-title {
-    font-size: 46px;
-    font-weight: 700;
-}
-
-.line {
-    margin-top: 30px;
-    margin-left: 20px;
-    width: 20%;
-    border-bottom: 20px solid #580e29;
-    position: absolute;
-}
-
-.selection-box select {
-    font-family: Dubai;
-    font-size: 25px;
-    width: 150px;
-    border-radius: 10px;
-    padding: 5px 10px;
-    border: 2px solid #230c0f;
+    margin-left: 17%;
 }
 
 .search-bar {
-    font-size: 20px;
-    font-weight: 400;
+    margin-top: 3%;
+    text-align: center;
+}
+
+.search-text {
+    color: #230c0f;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.search-name {
+    color: #230c0f;
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 3px;
+}
+
+.movie-select {
+    color: #230c0f;
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+.tv-select {
+    color: #230c0f;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.search-button {
+    color: #230c0f;
+    background-color: #a2d3c2;
     border-radius: 10px;
-    border: 2px solid #230c0f;
-    width: 300px;
-    padding: 15px 15px;
+    margin-top: 1%;
+    text-align: center;
+    height: 50px;
+    width: 80px;
+    font-weight: 700;
 }
 
 .search-button button {
-    margin-top: 50px;
-    margin-left: 120px;
-    font-size: 20px;
-    font-weight: 500;
-    font-family: Dubai;
-    border-radius: 20px;
-    padding: 0;
-    border: none;
-    background: none;
-    background-color: #a2d3c2;
-    height: 38px;
-    width: 140px;
+    border: #230c0f;
 }
 
-img {
-    margin: 2%;
-    width: 275px;
-    height: 396px;
+input[type='text'] {
+    padding: 2px;
+    border: 2px solid #230c0f;
+    height: 30px;
+    width: 10%;
 }
