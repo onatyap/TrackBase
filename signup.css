@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+}
+
+.grid-container {
+    font-family: Dubai;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.right-side {
+    margin-top: 150px;
+    margin-left: 220px;
+}
+
+.page-title {
+    font-size: 64px;
+    font-weight: 700;
+}
+
+.username {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.password {
+    margin-top: 15px;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.link-to {
+    margin-top: 2px;
+    margin-left: 30px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.signup-button button {
+    margin-top: 100px;
+    margin-left: 30px;
+    font-size: 30px;
+    font-family: Dubai;
+    border-radius: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+    background-color: #a2d3c2;
+    height: 65px;
+    width: 240px;
+}
+
+input[type='text'], input[type='password'] {
+    border-radius: 10px;
+    border: 2px solid #230c0f;
+    width: 40%;
+    padding: 15px 15px;
+}
