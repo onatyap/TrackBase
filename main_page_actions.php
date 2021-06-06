@@ -1,20 +1,66 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="functions.css">
+    </head>
+</html>
+
+
 <?php
+
 require_once 'include/dbConnect.php';
 require_once 'include/functions.php';
 
 session_start();
 
+//Todo: Move back button to a navbar.
+echo "<div class='back-button'> <button onclick=goBack()>Back</button> </div>";
+
 if (isset($_POST['search'])){
     $contentName = $_POST["content_name"];
     $category = $_POST["category"];
+    $sort = $_POST["sort"];
 
     if($category == "movie"){
-        $result = searchMovieWithName($conn,$contentName);
+        if($sort == 'rating') {
+            $result = searchMovieWithNameOrderByRating($conn,$contentName);
+            printTable($conn,$result);
+        } else {
+            $result = searchMovieWithNameOrderByPopularity($conn,$contentName);
+            printPopularMovieTable($conn,$result);
+        }
     } else {
-        $result = searchTvShowWithName($conn,$contentName);
+        if($sort == 'rating') {
+            $result = searchTvShowWithNameOrderByRating($conn,$contentName);
+            printTableWithoutRecommendColumn($conn,$result);
+        } else {
+            $result = searchTvShowWithNameOrderByPopularity($conn,$contentName);
+            printPopularTVSeriesTable($conn,$result);
+        }
     }
+}
 
-    printTable($conn,$result);
+if (isset($_POST['search-by-genre'])){
+    $category = $_POST["category-genre"];
+    $sort = $_POST["sort-genre"];
+    $genre = $_POST["genre"];
+
+    if($category == "movie"){
+        if($sort == 'rating') {
+            $result = searchMovieWithGenreOrderByRating($conn,$genre);
+            printTable($conn,$result);
+        } else {
+            $result = searchMovieWithGenreOrderByPopularity($conn,$genre);
+            printPopularMovieTable($conn,$result);
+        }
+    } else {
+        if($sort == 'rating') {
+            $result = searchTvShowWithGenreOrderByRating($conn,$genre);
+            printTableWithoutRecommendColumn($conn,$result);
+        } else {
+            $result = searchTvShowWithGenreOrderByPopularity($conn,$genre);
+            printPopularTVSeriesTable($conn,$result);
+        }
+    }
 }
 
 if (isset($_POST['show_watchlist'])){
@@ -67,9 +113,21 @@ if (isset($_POST['remove_episode_from_watched'])){
     removeEpisodeFromWatched($conn,$contentId,$season,$episode_number);
 }
 
+if (isset($_POST['recommend_movies_like_this'])){
+    $contentId = $_POST["content_id"];
+    $result = getPeopleWatchedThisAfterThis($conn,$contentId);
+    printPopularMovieTable($conn,$result);
+}
 
+if (isset($_POST['movie_recommendation'])){
+    $result = recommendMoviesAccordingToSimilarWatchingRecords($conn);
+    printPopularMovieTable($conn,$result);
+}
 
-echo "<button onclick=goBack()>Back</button>";
+if (isset($_POST['tv_series_recommendation'])){
+    $result = recommendTVSeriesAccordingToSimilarWatchingRecords($conn);
+    printPopularTVSeriesTable($conn,$result);
+}
  ?>
 
 
