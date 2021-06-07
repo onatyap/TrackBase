@@ -734,25 +734,31 @@ function createEpisodesTable($conn, $result) {
                 $formId = "isWatchedEpisodeForm_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 $buttonId = "isWatchedEpisodeButton_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 echo "<td> 
+                <div class='remove-watched-button'>
                 <iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe> 
                 <form id='" . $formId . "' action='main_page_actions.php' method='post' target='dummyframe'> 
                 <input type='hidden' name='content_id' value=" . $row['tv_show_id'] . "> 
                 <input type='hidden' name='season' value=" . $row['season'] . "> 
                 <input type='hidden' name='episode_number' value=" . $row['episode_number'] . "> 
                 <input id=". $buttonId . " onclick=changeEpisode('watched_episode',". $row['tv_show_id'] .",". $row['season'] .",". $row['episode_number'] .") type='submit' value='Mark as not watched' name='remove_episode_from_watched'/> 
-                </form> </td>";
+                </form> 
+                </div>
+                </td>";
             }
             else {
                 $formId = "isWatchedEpisodeForm_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 $buttonId = "isWatchedEpisodeButton_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 echo "<td> 
+                <div class='add-watched-button'>
                 <iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe> 
                 <form id='" . $formId . "' action='main_page_actions.php' method='post' target='dummyframe'> 
                 <input type='hidden' name='content_id' value=" . $row['tv_show_id'] . "> 
                 <input type='hidden' name='season' value=" . $row['season'] . "> 
                 <input type='hidden' name='episode_number' value=" . $row['episode_number'] . "> 
                 <input id=". $buttonId . " onclick=changeEpisode('watched_episode',". $row['tv_show_id'] .",". $row['season'] .",". $row['episode_number'] .") type='submit' value='Mark as watched' name='add_episode_to_watched'/> 
-                </form> </td>";
+                </form> 
+                </div>
+                </td>";
             }
 
             echo "</tr>";
@@ -798,7 +804,7 @@ function printTableWithoutRecommendColumn($conn, $result) {
                 $printGenre = substr($printGenre, 0, -2);
             }
             
-            echo "<td><div class='tooltip'>" . $row['name'] . "
+            echo "<td> <div class='tooltip'>" . $row['name'] . "
                     <span class='tooltiptext'>" . $printGenre . '</br>' . $row['description'] . "</span>
                 </div></td>";
 

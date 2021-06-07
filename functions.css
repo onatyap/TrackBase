@@ -119,25 +119,28 @@ li {
 .tooltip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+    border-bottom: 1px dotted #230c0f; /* If you want dots under the hoverable text */
   }
   
   /* Tooltip text */
   .tooltip .tooltiptext {
     visibility: hidden;
-    width: 120px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
+    width: 450px;
+    height: fit-content;
+    background-color: #BFC5C3;
+    color: #230c0f;
+    text-align: left;
+    padding: 5px;
+    border: #230c0f;
+    border-style: solid;
     border-radius: 6px;
+    font-size: 15px;
   
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
+    bottom: -30%;
+    left: 150%;
   
     /* Fade in tooltip */
     opacity: 0;
@@ -148,12 +151,11 @@ li {
   .tooltip .tooltiptext::after {
     content: "";
     position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
+    bottom: 14%;
+    left: -5%;
+    border-width: 10px;
     border-style: solid;
-    border-color: #555 transparent transparent transparent;
+    border-color:  transparent #230c0f transparent  transparent;
   }
   
   /* Show the tooltip text when you mouse over the tooltip container */
