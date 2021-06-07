@@ -300,7 +300,6 @@ function getPopularMovies($conn) {
               GROUP BY content.content_id 
               ORDER BY COUNT(*) DESC LIMIT 5";
 
-    $result = mysqli_query($conn, $query);
     return mysqli_query($conn, $query);
 }
 
@@ -314,12 +313,12 @@ function getPopularTvSeries($conn) {
               FROM content, watched_episodes 
               WHERE content.content_id = watched_episodes.tv_show_id AND watched_episodes.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $todayDate . "' 
               GROUP BY content.content_id ORDER BY COUNT(*) DESC LIMIT 5";
-	$result = mysqli_query($conn, $query);
 	return mysqli_query($conn, $query);
 }
 
 function getPeopleWatchedThisAfterThis($conn, $contentId) {
-    $query = "SELECT C.content_id, C.description AS description, MIN(WM.watched_date - P.watched_date), C.content_name AS name
+    $query = "SELECT DISTINCT C.content_id, description1 AS description, name1 AS name
+                FROM (SELECT C.content_id, C.description AS description1, WM.watched_date AS wd, P.watched_date, C.content_name AS name1
               FROM (SELECT user_id, watched_date
                      FROM WATCHED_MOVIES
                      WHERE content_id =" . $contentId . "
@@ -329,13 +328,13 @@ function getPeopleWatchedThisAfterThis($conn, $contentId) {
             WHERE P.user_id = WM.user_id
              AND WM.watched_date > P.watched_date
              AND c.content_id = WM.content_id
+             AND c.content_id !=" . $contentId . "
             GROUP BY content_id, WM.watched_date, P.watched_date
-            ORDER BY WM.watched_date - P.watched_date LIMIT 5";
-
-    $result = mysqli_query($conn, $query);
+            ORDER BY WM.watched_date - P.watched_date) C LIMIT 5";
 
     return mysqli_query($conn, $query);
 }
+
 
 function recommendMoviesAccordingToSimilarWatchingRecords($conn) {
     $query = "SELECT C.content_name AS name, C.description AS description, C.content_id, COUNT(*)
