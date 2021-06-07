@@ -424,7 +424,7 @@ function printTable($conn, $result) {
             }
             
             echo "<td><div class='tooltip'>" . $row['name'] . "
-                    <span class='tooltiptext'>" . $printGenre . '</br>' . $row['description'] . "</span>
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
                 </div></td>";
 
             //Watchlist
@@ -529,7 +529,7 @@ function printPopularMovieTable($conn, $result) {
             }
             
             echo "<td><div class='tooltip'>" . $row['name'] . "
-                    <span class='tooltiptext'>" . $printGenre . '</br>' . $row['description'] . "</span>
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
                 </div></td>";
 
             //Watchlist
@@ -635,7 +635,7 @@ function printPopularTVSeriesTable($conn, $result) {
             }
             
             echo "<td><div class='tooltip'>" . $row['name'] . "
-                    <span class='tooltiptext'>" . $printGenre . '</br>' . $row['description'] . "</span>
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
                 </div></td>";
 
             //Watchlist
@@ -724,7 +724,7 @@ function createEpisodesTable($conn, $result) {
             }
             
             echo "<td><div class='tooltip'>" . $row['name'] . "
-                    <span class='tooltiptext'>" . $printGenre . '</br>' . $row['description'] . "</span>
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
                 </div></td>";
             echo "<td>" . $row['season'] . "</td>";
             echo "<td>" . $row['episode_number'] . "</td>";
