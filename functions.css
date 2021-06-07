@@ -9,6 +9,7 @@ table {
     width: 80%;
     border-left: none;
     border-right: none;
+    margin-top: 2%;
 }
 
 th {
@@ -26,11 +27,53 @@ td {
     border-bottom: 1px solid #ddd;
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #285445;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+li {
+    display: inline;
+    float: left;
+    font-size: 20px;
+}
+
+.navbar form {
+    font-size: 0%;
+}
+
+
+.back {
+    display: block;
+    padding: 8px;
+}
+
+
+.back button {
+    color: white;
+    border: none;
+    font-size: 20px;
+    font-family: Dubai;
+    padding: 0;
+    background: none;
+}
+
+.back button:hover {
+    text-decoration: underline;
+}
+
 .add-watchlist-button input, 
 .add-watched-button input, 
 .select-episodes-button input, 
 .remove-watchlist-button input, 
 .remove-watched-button input {
+    font-size: 15px;
     font-family: Dubai;
     font-weight: 500;
     text-align: center;
@@ -48,14 +91,28 @@ td {
     text-align: center;
 }
 
-.back-button button {
-    color: #230c0f;
-    background-color: #a2d3c2;
-    border-radius: 10px;
-    margin-top: 1%;
-    margin-left: 5px;
+.recommendation-button button {
+    font-family: Dubai;
+    font-size: 15px;
+    font-weight: 500;
     text-align: center;
-    height: 50px;
-    width: 80px;
-    font-weight: 700;
+    border-radius: 10px;
+    width: 105%;
+    height: 100%;
+    background: none;
+    background-color: #a2d3c2;
 }
+
+.recommendation-button2 button {
+    font-family: Dubai;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 10px;
+    width: 80%;
+    height: 100%;
+    background: none;
+    background-color: #a2d3c2;
+}
+
+
