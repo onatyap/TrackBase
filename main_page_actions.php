@@ -87,6 +87,11 @@ if (isset($_POST['show_watched_movies'])) {
     printTable($conn, $result);
 }
 
+if (isset($_POST['show_watched_episodes'])) {
+    $result = getWatchedEpisodes($conn);
+    createEpisodesTable($conn, $result);
+}
+
 if (isset($_POST['add_to_watchlist'])) {
     $contentId = $_POST["content_id"];
     addToWatchlist($conn, $contentId);

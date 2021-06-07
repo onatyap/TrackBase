@@ -1,6 +1,6 @@
 <?php
 // Name of the data file
-$filename = 'include/db.sql';
+$filename = 'include/movie.sql';
 // MySQL host
 $mysqlHost = 'localhost';
 // MySQL username
