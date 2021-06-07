@@ -14,7 +14,8 @@ function searchMovieWithNameOrderByRating($conn,$contentName){
     LEFT JOIN ratings
     ON content.content_id = ratings.content_id
     GROUP BY content.content_id 
-    ORDER BY AVG(ratings.rating_value) DESC";
+    ORDER BY AVG(ratings.rating_value) DESC
+    LIMIT 100";
 
     $result = mysqli_query($conn, $query);
 
@@ -23,15 +24,16 @@ function searchMovieWithNameOrderByRating($conn,$contentName){
 
 function searchMovieWithGenreOrderByRating($conn,$genre){
     $query = "SELECT content.content_id AS content_id, content.description AS description, content.content_name AS name, AVG(ratings.rating_value) AS rating 
-    FROM movies
-    INNER JOIN content
-    ON content.content_id = movies.content_id
-    INNER JOIN categories
-    ON movies.content_id = categories.content_id and categories.genre ='" . $genre . "'
-    LEFT JOIN ratings
-    ON content.content_id = ratings.content_id
-    GROUP BY content.content_id 
-    ORDER BY AVG(ratings.rating_value) DESC";
+            FROM movies
+            INNER JOIN content
+            ON content.content_id = movies.content_id
+            INNER JOIN categories
+            ON movies.content_id = categories.content_id and categories.genre ='" . $genre . "'
+            LEFT JOIN ratings
+            ON content.content_id = ratings.content_id
+            GROUP BY content.content_id 
+            ORDER BY AVG(ratings.rating_value) DESC
+            LIMIT 100";
 
     $result = mysqli_query($conn, $query);
 
@@ -50,7 +52,8 @@ function searchMovieWithNameOrderByPopularity($conn,$contentName) {
               ON content.content_id = watched_movies.content_id AND watched_movies.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $todayDate . "' 
               WHERE content.content_name LIKE '%" . $contentName . "%' 
               GROUP BY content.content_id 
-              ORDER BY COUNT(*) DESC";
+              ORDER BY COUNT(*) DESC
+              LIMIT 100";
 
     $result = mysqli_query($conn, $query);
 
@@ -71,7 +74,8 @@ function searchMovieWithGenreOrderByPopularity($conn,$genre) {
               LEFT JOIN watched_movies
               ON movies.content_id = watched_movies.content_id AND watched_movies.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $todayDate . "' 
               GROUP BY movies.content_id 
-              ORDER BY COUNT(*) DESC";
+              ORDER BY COUNT(*) DESC
+              LIMIT 100";
 
     $result = mysqli_query($conn, $query);
 
@@ -86,7 +90,8 @@ function searchTvShowWithNameOrderByRating($conn,$contentName){
     LEFT JOIN ratings
     ON content.content_id = ratings.content_id
     GROUP BY content.content_id 
-    ORDER BY AVG(ratings.rating_value) DESC";
+    ORDER BY AVG(ratings.rating_value) DESC
+    LIMIT 100";
 
     $result = mysqli_query($conn, $query);
 
@@ -103,7 +108,8 @@ function searchTvShowWithGenreOrderByRating($conn,$genre){
     LEFT JOIN ratings
     ON content.content_id = ratings.content_id
     GROUP BY content.content_id 
-    ORDER BY AVG(ratings.rating_value) DESC";
+    ORDER BY AVG(ratings.rating_value) DESC
+    LIMIT 100";
 
     $result = mysqli_query($conn, $query);
 
@@ -121,7 +127,8 @@ function searchTvShowWithNameOrderByPopularity($conn,$contentName) {
               ON content.content_id = tv_shows.content_id and content.content_name LIKE '%" . $contentName . "%' 
               LEFT JOIN watched_episodes 
               ON content.content_id = watched_episodes.tv_show_id AND watched_episodes.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $todayDate . "' 
-              GROUP BY content.content_id ORDER BY COUNT(*) DESC";
+              GROUP BY content.content_id ORDER BY COUNT(*) DESC
+              LIMIT 100";
     $result = mysqli_query($conn, $query);
 
     return $result;
@@ -140,7 +147,8 @@ function searchTvShowWithGenreOrderByPopularity($conn,$genre) {
               ON tv_shows.content_id = categories.content_id AND categories.genre ='" . $genre . "'
               LEFT JOIN watched_episodes 
               ON content.content_id = watched_episodes.tv_show_id AND watched_episodes.watched_date BETWEEN '" . $lastMonthDate . "' AND '" . $todayDate . "' 
-              GROUP BY content.content_id ORDER BY COUNT(*) DESC";
+              GROUP BY content.content_id ORDER BY COUNT(*) DESC
+              LIMIT 100";
     $result = mysqli_query($conn, $query);
 
     return $result;
@@ -172,13 +180,28 @@ function getWatchedMovies($conn){
     return mysqli_query($conn, $query);
 }
 
+function getWatchedEpisodes($conn){
+    $query = "SELECT content.content_id AS tv_show_id, content.content_name AS name, content.description AS description, watched_episodes.season AS season, watched_episodes.episode_number AS episode_number
+              FROM watched_episodes
+              INNER JOIN content
+              ON content.content_id = watched_episodes.tv_show_id and watched_episodes.user_id =" . $_SESSION["id"] . "
+              ORDER BY content.content_name, watched_episodes.season, watched_episodes.episode_number";
+
+   return mysqli_query($conn, $query);
+}
+
 function addToWatchlist($conn,$contentId) {
     $query = " INSERT INTO LISTS(user_id,content_id) VALUES ('" . $_SESSION["id"] . "', '" . $contentId . "')";
     mysqli_query($conn, $query);
 }
 
 function getEpisodesTable($conn,$contentId) {
-    $query = "SELECT * FROM episodes where tv_show_id =" . $contentId;
+    $query = "SELECT content.content_id AS tv_show_id, content.content_name AS name, content.description AS description, episodes.season AS season, episodes.episode_number AS episode_number
+            FROM episodes 
+            INNER JOIN content 
+            ON episodes.tv_show_id = content.content_id 
+            WHERE tv_show_id =" . $contentId . "
+            ORDER BY season, episode_number";
     return mysqli_query($conn, $query);
 }
 
@@ -254,6 +277,18 @@ function getAverageRating($conn,$contentId) {
     return $result->fetch_row()[0] ?? false;
 }
 
+function getGenres($conn,$contentId) {
+    $query = "SELECT genre
+            FROM categories
+            WHERE content_id = " . $contentId;
+
+    $result = mysqli_query($conn, $query);
+    if(mysqli_num_rows($result) == 0) {
+        return false;
+    }
+    return $result;
+}
+
 function getPopularMovies($conn) {
 	$today = strtotime("+1 day");
 	$todayDate = date("Y-m-d",$today);
@@ -284,7 +319,7 @@ function getPopularTvSeries($conn) {
 }
 
 function getPeopleWatchedThisAfterThis($conn, $contentId) {
-    $query = "SELECT C.content_id, MIN(WM.watched_date - P.watched_date), C.content_name AS name
+    $query = "SELECT C.content_id, C.description AS description, MIN(WM.watched_date - P.watched_date), C.content_name AS name
               FROM (SELECT user_id, watched_date
                      FROM WATCHED_MOVIES
                      WHERE content_id =" . $contentId . "
@@ -295,7 +330,7 @@ function getPeopleWatchedThisAfterThis($conn, $contentId) {
              AND WM.watched_date > P.watched_date
              AND c.content_id = WM.content_id
             GROUP BY content_id, WM.watched_date, P.watched_date
-            ORDER BY WM.watched_date - P.watched_date";
+            ORDER BY WM.watched_date - P.watched_date LIMIT 5";
 
     $result = mysqli_query($conn, $query);
 
@@ -303,7 +338,7 @@ function getPeopleWatchedThisAfterThis($conn, $contentId) {
 }
 
 function recommendMoviesAccordingToSimilarWatchingRecords($conn) {
-    $query = "SELECT C.content_name AS name, C.content_id, COUNT(*)
+    $query = "SELECT C.content_name AS name, C.description AS description, C.content_id, COUNT(*)
                 FROM WATCHED_MOVIES, CONTENT C
                 WHERE C.content_id = WATCHED_MOVIES.content_id AND user_id IN (
                    SELECT user_id
@@ -319,13 +354,13 @@ function recommendMoviesAccordingToSimilarWatchingRecords($conn) {
                                         FROM WATCHED_MOVIES WM
                                         WHERE user_id = " . $_SESSION["id"] . ")
                 GROUP BY C.content_id
-                ORDER BY COUNT(*) DESC";
-
-    return $result;
+                ORDER BY COUNT(*) DESC LIMIT 5";
+    
+    return mysqli_query($conn, $query);;
 }
 
 function recommendTVSeriesAccordingToSimilarWatchingRecords($conn) {
-    $query = "SELECT C.content_id, C.content_name AS name, COUNT(*)
+    $query = "SELECT C.content_id, C.content_name AS name, C.description AS description, COUNT(*)
                 FROM WATCHED_EPISODES, CONTENT C
                 WHERE tv_show_id = C.content_id AND user_id IN (
                    SELECT user_id
@@ -345,7 +380,7 @@ function recommendTVSeriesAccordingToSimilarWatchingRecords($conn) {
                                         GROUP BY tv_show_id
                                         HAVING COUNT(*) > 3)
                 GROUP BY tv_show_id
-                ORDER BY COUNT(*) DESC";
+                ORDER BY COUNT(*) DESC LIMIT 5";
 
     return mysqli_query($conn, $query);
 }
@@ -377,7 +412,20 @@ function printTable($conn, $result) {
 
             echo "<tr>";
 
-            echo "<td>" . $row['name'] . "</td>";
+            $genres = getGenres($conn,$row['content_id']);
+            $printGenre = "";
+            if ($genres) {
+                $printGenre = $printGenre."Genres: ";
+                foreach($genres as $g){
+                    $printGenre = $printGenre.$g['genre'];
+                    $printGenre = $printGenre.", ";
+                }
+                $printGenre = substr($printGenre, 0, -2);
+            }
+            
+            echo "<td><div class='tooltip'>" . $row['name'] . "
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
+                </div></td>";
 
             //Watchlist
 
@@ -469,7 +517,20 @@ function printPopularMovieTable($conn, $result) {
 
             echo "<td>" . $rank++ . "</td>";
 
-            echo "<td>" . $row['name'] . "</td>";
+            $genres = getGenres($conn,$row['content_id']);
+            $printGenre = "";
+            if ($genres) {
+                $printGenre = $printGenre."Genres: ";
+                foreach($genres as $g){
+                    $printGenre = $printGenre.$g['genre'];
+                    $printGenre = $printGenre.", ";
+                }
+                $printGenre = substr($printGenre, 0, -2);
+            }
+            
+            echo "<td><div class='tooltip'>" . $row['name'] . "
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
+                </div></td>";
 
             //Watchlist
 
@@ -562,7 +623,20 @@ function printPopularTVSeriesTable($conn, $result) {
 
             echo "<td>" . $rank++ . "</td>";
 
-            echo "<td>" . $row['name'] . "</td>";
+            $genres = getGenres($conn,$row['content_id']);
+            $printGenre = "";
+            if ($genres) {
+                $printGenre = $printGenre."Genres: ";
+                foreach($genres as $g){
+                    $printGenre = $printGenre.$g['genre'];
+                    $printGenre = $printGenre.", ";
+                }
+                $printGenre = substr($printGenre, 0, -2);
+            }
+            
+            echo "<td><div class='tooltip'>" . $row['name'] . "
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
+                </div></td>";
 
             //Watchlist
 
@@ -623,13 +697,11 @@ function createEpisodesTable($conn, $result) {
 
         <tr>
 
+        <th>Name</th>
+
         <th>Season</th>
 
         <th>Episode number</th>
-
-        <th>Episode name</th>
-
-        <th>Episode length</th>
 
         <th>Watched</th>
 
@@ -640,35 +712,53 @@ function createEpisodesTable($conn, $result) {
         foreach($result as $row){
 
             echo "<tr>";
+            $genres = getGenres($conn,$row['tv_show_id']);
+            $printGenre = "";
+            if ($genres) {
+                $printGenre = $printGenre."Genres: ";
+                foreach($genres as $g){
+                    $printGenre = $printGenre.$g['genre'];
+                    $printGenre = $printGenre.", ";
+                }
+                $printGenre = substr($printGenre, 0, -2);
+            }
+            
+            echo "<td><div class='tooltip'>" . $row['name'] . "
+                    <span class='tooltiptext'>" . $printGenre . '</br> Description: ' . $row['description'] . "</span>
+                </div></td>";
             echo "<td>" . $row['season'] . "</td>";
             echo "<td>" . $row['episode_number'] . "</td>";
-            echo "<td>" . $row['episode_name'] . "</td>";
-            echo "<td>" . $row['episode_length'] . "</td>";
-
+            
             //Watched
             if(isEpisodeWatched($conn,$row['tv_show_id'],$row['season'],$row['episode_number'])){
                 $formId = "isWatchedEpisodeForm_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 $buttonId = "isWatchedEpisodeButton_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 echo "<td> 
+                <div class='remove-watched-button'>
                 <iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe> 
                 <form id='" . $formId . "' action='main_page_actions.php' method='post' target='dummyframe'> 
                 <input type='hidden' name='content_id' value=" . $row['tv_show_id'] . "> 
                 <input type='hidden' name='season' value=" . $row['season'] . "> 
                 <input type='hidden' name='episode_number' value=" . $row['episode_number'] . "> 
                 <input id=". $buttonId . " onclick=changeEpisode('watched_episode',". $row['tv_show_id'] .",". $row['season'] .",". $row['episode_number'] .") type='submit' value='Mark as not watched' name='remove_episode_from_watched'/> 
-                </form> </td>";
+                </form> 
+                </div>
+                </td>";
             }
             else {
                 $formId = "isWatchedEpisodeForm_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 $buttonId = "isWatchedEpisodeButton_" . $row['tv_show_id'] . "_" . $row['season'] . "_" . $row['episode_number'];
                 echo "<td> 
+                <div class='add-watched-button'>
                 <iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe> 
                 <form id='" . $formId . "' action='main_page_actions.php' method='post' target='dummyframe'> 
                 <input type='hidden' name='content_id' value=" . $row['tv_show_id'] . "> 
                 <input type='hidden' name='season' value=" . $row['season'] . "> 
                 <input type='hidden' name='episode_number' value=" . $row['episode_number'] . "> 
                 <input id=". $buttonId . " onclick=changeEpisode('watched_episode',". $row['tv_show_id'] .",". $row['season'] .",". $row['episode_number'] .") type='submit' value='Mark as watched' name='add_episode_to_watched'/> 
-                </form> </td>";
+                </form> 
+                </div>
+                </td>";
             }
 
             echo "</tr>";
@@ -703,7 +793,20 @@ function printTableWithoutRecommendColumn($conn, $result) {
 
             echo "<tr>";
 
-            echo "<td>" . $row['name'] . "</td>";
+            $genres = getGenres($conn,$row['content_id']);
+            $printGenre = "";
+            if ($genres) {
+                $printGenre = $printGenre."Genres: ";
+                foreach($genres as $g){
+                    $printGenre = $printGenre.$g['genre'];
+                    $printGenre = $printGenre.", ";
+                }
+                $printGenre = substr($printGenre, 0, -2);
+            }
+            
+            echo "<td> <div class='tooltip'>" . $row['name'] . "
+                    <span class='tooltiptext'>" . $printGenre . '</br>' . $row['description'] . "</span>
+                </div></td>";
 
             //Watchlist
 

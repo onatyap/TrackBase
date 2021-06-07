@@ -34,6 +34,11 @@ if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
       </li>
       <li class='watched'>
         <form action='main_page_actions.php' method='post'>
+          <button type='submit' , name='show_watched_episodes'>Watched TV Series</button>
+        </form>
+      </li>
+      <li class='watched'>
+        <form action='main_page_actions.php' method='post'>
           <button type='submit' , name='movie_recommendation'>Recommend Movies</button>
         </form>
       </li>
