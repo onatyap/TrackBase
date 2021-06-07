@@ -1,3 +1,4 @@
+    mysqli_query($conn, $query);
 <html>
     <head>
         <link rel="stylesheet" href="functions.css">
@@ -418,11 +419,13 @@ function printTable($conn, $result) {
 
             //Recommendation
              if(isMovie($conn,$row['content_id'])) {
-                echo "<td> 
+                echo "<td>
+                    <div class='recommendation-button2'> 
                     <form action='main_page_actions.php' method='post'>
                         <input type='hidden' name='content_id' value=" . $row['content_id'] . ">
                       <button type='submit' , name='recommend_movies_like_this'>Recommend me movies like this</button>
                     </form>
+                    </div>
                       </td>";
              } else {
                 echo "<td></td>";
@@ -516,11 +519,12 @@ function printPopularMovieTable($conn, $result) {
 
 
             //Recommendation
-            echo "<td> 
+            echo "<td> <div class='recommendation-button'>
                 <form action='main_page_actions.php' method='post'>
                     <input type='hidden' name='content_id' value=" . $row['content_id'] . ">
                   <button type='submit' , name='recommend_movies_like_this'>Recommend me movies like this</button>
                 </form>
+                </div>
                   </td>";
             echo "</tr>";
 
